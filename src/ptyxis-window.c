@@ -666,7 +666,23 @@ ptyxis_window_new_window_action (GtkWidget  *widget,
   settings = ptyxis_application_get_settings (PTYXIS_APPLICATION_DEFAULT);
 
   tab = ptyxis_tab_new (profile);
-  ptyxis_window_apply_current_settings (self, tab);
+
+  if (ptyxis_profile_get_new_window_opens_home_directory (profile))
+    {
+      PtyxisTab *active_tab = ptyxis_window_get_active_tab (self);
+
+      if (active_tab != NULL)
+        {
+          PtyxisTerminal *terminal = ptyxis_tab_get_terminal (active_tab);
+
+          ptyxis_tab_set_zoom (tab, ptyxis_tab_get_zoom (active_tab));
+          vte_terminal_set_size (VTE_TERMINAL (ptyxis_tab_get_terminal (tab)),
+                                 vte_terminal_get_column_count (VTE_TERMINAL (terminal)),
+                                 vte_terminal_get_row_count (VTE_TERMINAL (terminal)));
+        }
+    }
+  else
+    ptyxis_window_apply_current_settings (self, tab);
 
   if (!ptyxis_str_empty0 (container_id))
     {

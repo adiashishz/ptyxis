@@ -77,6 +77,7 @@ struct _PtyxisPreferencesWindow
   AdwPreferencesGroup  *opacity_group;
   GtkLabel             *opacity_label;
   GtkFlowBox           *palette_previews;
+  AdwSwitchRow         *new_window_opens_home_directory;
   AdwComboRow          *preserve_directory;
   GListModel           *preserve_directories;
   GtkListBox           *profiles_list_box;
@@ -619,6 +620,12 @@ ptyxis_preferences_window_notify_default_profile_cb (PtyxisPreferencesWindow *se
                                 g_object_ref (self->preserve_directories),
                                 g_object_unref);
 
+  g_settings_bind (gsettings,
+                   PTYXIS_PROFILE_KEY_NEW_WINDOW_HOME,
+                   self->new_window_opens_home_directory,
+                   "active",
+                   G_SETTINGS_BIND_DEFAULT);
+
   custom_links_list = ptyxis_profile_list_custom_links (profile);
   custom_links_list_model = ptyxis_add_button_list_model_new (custom_links_list);
 
@@ -1160,6 +1167,7 @@ ptyxis_preferences_window_class_init (PtyxisPreferencesWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, PtyxisPreferencesWindow, opacity_group);
   gtk_widget_class_bind_template_child (widget_class, PtyxisPreferencesWindow, opacity_label);
   gtk_widget_class_bind_template_child (widget_class, PtyxisPreferencesWindow, palette_previews);
+  gtk_widget_class_bind_template_child (widget_class, PtyxisPreferencesWindow, new_window_opens_home_directory);
   gtk_widget_class_bind_template_child (widget_class, PtyxisPreferencesWindow, preserve_directories);
   gtk_widget_class_bind_template_child (widget_class, PtyxisPreferencesWindow, preserve_directory);
   gtk_widget_class_bind_template_child (widget_class, PtyxisPreferencesWindow, profiles_list_box);

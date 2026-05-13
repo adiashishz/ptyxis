@@ -55,6 +55,7 @@ enum {
   PROP_OPACITY,
   PROP_PALETTE,
   PROP_PALETTE_ID,
+  PROP_NEW_WINDOW_HOME,
   PROP_PRESERVE_CONTAINER,
   PROP_PRESERVE_DIRECTORY,
   PROP_SCROLL_ON_KEYSTROKE,
@@ -225,6 +226,8 @@ ptyxis_profile_changed_cb (PtyxisProfile *self,
     g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_USE_CUSTOM_COMMAND]);
   else if (g_str_equal (key, PTYXIS_PROFILE_KEY_USE_PROXY))
     g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_USE_PROXY]);
+  else if (g_str_equal (key, PTYXIS_PROFILE_KEY_NEW_WINDOW_HOME))
+    g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_NEW_WINDOW_HOME]);
   else if (g_str_equal (key, PTYXIS_PROFILE_KEY_CUSTOM_LINKS))
     read_custom_links_from_settings (self);
 }
@@ -344,6 +347,10 @@ ptyxis_profile_get_property (GObject    *object,
       g_value_set_enum (value, ptyxis_profile_get_preserve_directory (self));
       break;
 
+    case PROP_NEW_WINDOW_HOME:
+      g_value_set_boolean (value, ptyxis_profile_get_new_window_opens_home_directory (self));
+      break;
+
     case PROP_SCROLL_ON_KEYSTROKE:
       g_value_set_boolean (value, ptyxis_profile_get_scroll_on_keystroke (self));
       break;
@@ -457,6 +464,10 @@ ptyxis_profile_set_property (GObject      *object,
 
     case PROP_PRESERVE_DIRECTORY:
       ptyxis_profile_set_preserve_directory (self, g_value_get_enum (value));
+      break;
+
+    case PROP_NEW_WINDOW_HOME:
+      ptyxis_profile_set_new_window_opens_home_directory (self, g_value_get_boolean (value));
       break;
 
     case PROP_SCROLL_ON_KEYSTROKE:
@@ -626,6 +637,13 @@ ptyxis_profile_class_init (PtyxisProfileClass *klass)
                        (G_PARAM_READWRITE |
                         G_PARAM_EXPLICIT_NOTIFY |
                         G_PARAM_STATIC_STRINGS));
+
+  properties[PROP_NEW_WINDOW_HOME] =
+    g_param_spec_boolean ("new-window-opens-home-directory", NULL, NULL,
+                          FALSE,
+                          (G_PARAM_READWRITE |
+                           G_PARAM_EXPLICIT_NOTIFY |
+                           G_PARAM_STATIC_STRINGS));
 
   properties[PROP_SCROLL_ON_KEYSTROKE] =
     g_param_spec_boolean ("scroll-on-keystroke", NULL, NULL,
@@ -863,6 +881,25 @@ ptyxis_profile_set_preserve_directory (PtyxisProfile           *self,
   g_settings_set_enum (self->settings,
                        PTYXIS_PROFILE_KEY_PRESERVE_DIRECTORY,
                        preserve_directory);
+}
+
+gboolean
+ptyxis_profile_get_new_window_opens_home_directory (PtyxisProfile *self)
+{
+  g_return_val_if_fail (PTYXIS_IS_PROFILE (self), FALSE);
+
+  return g_settings_get_boolean (self->settings, PTYXIS_PROFILE_KEY_NEW_WINDOW_HOME);
+}
+
+void
+ptyxis_profile_set_new_window_opens_home_directory (PtyxisProfile *self,
+                                                    gboolean       new_window_opens_home_directory)
+{
+  g_return_if_fail (PTYXIS_IS_PROFILE (self));
+
+  g_settings_set_boolean (self->settings,
+                          PTYXIS_PROFILE_KEY_NEW_WINDOW_HOME,
+                          new_window_opens_home_directory);
 }
 
 PtyxisProfile *
