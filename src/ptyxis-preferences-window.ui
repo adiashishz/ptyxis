@@ -516,6 +516,12 @@
         <child>
           <object class="AdwPreferencesGroup">
             <child>
+              <object class="AdwSwitchRow" id="new_window_opens_home_directory">
+                <property name="title" translatable="yes">New Window Opens Home Directory</property>
+                <property name="subtitle" translatable="yes">New windows always start in the home directory</property>
+              </object>
+            </child>
+            <child>
               <object class="AdwComboRow" id="preserve_directory">
                 <property name="title" translatable="yes">Preserve Working Directory</property>
                 <property name="expression">

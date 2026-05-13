@@ -45,6 +45,7 @@ G_BEGIN_DECLS
 #define PTYXIS_PROFILE_KEY_PALETTE             "palette"
 #define PTYXIS_PROFILE_KEY_PRESERVE_CONTAINER  "preserve-container"
 #define PTYXIS_PROFILE_KEY_PRESERVE_DIRECTORY  "preserve-directory"
+#define PTYXIS_PROFILE_KEY_NEW_WINDOW_HOME     "new-window-opens-home-directory"
 #define PTYXIS_PROFILE_KEY_SCROLL_ON_KEYSTROKE "scroll-on-keystroke"
 #define PTYXIS_PROFILE_KEY_SCROLL_ON_OUTPUT    "scroll-on-output"
 #define PTYXIS_PROFILE_KEY_SCROLLBACK_LINES    "scrollback-lines"
@@ -119,9 +120,12 @@ void                     ptyxis_profile_set_exit_action          (PtyxisProfile 
 PtyxisPreserveContainer  ptyxis_profile_get_preserve_container   (PtyxisProfile           *self);
 void                     ptyxis_profile_set_preserve_container   (PtyxisProfile           *self,
                                                                   PtyxisPreserveContainer  preserve_container);
-PtyxisPreserveDirectory  ptyxis_profile_get_preserve_directory   (PtyxisProfile           *self);
-void                     ptyxis_profile_set_preserve_directory   (PtyxisProfile           *self,
-                                                                  PtyxisPreserveDirectory  preserve_directory);
+PtyxisPreserveDirectory  ptyxis_profile_get_preserve_directory         (PtyxisProfile           *self);
+void                     ptyxis_profile_set_preserve_directory         (PtyxisProfile           *self,
+                                                                        PtyxisPreserveDirectory  preserve_directory);
+gboolean                 ptyxis_profile_get_new_window_opens_home_directory (PtyxisProfile      *self);
+void                     ptyxis_profile_set_new_window_opens_home_directory (PtyxisProfile      *self,
+                                                                             gboolean            new_window_opens_home_directory);
 char                    *ptyxis_profile_dup_palette_id           (PtyxisProfile           *self);
 PtyxisPalette           *ptyxis_profile_dup_palette              (PtyxisProfile           *self);
 void                     ptyxis_profile_set_palette              (PtyxisProfile           *self,

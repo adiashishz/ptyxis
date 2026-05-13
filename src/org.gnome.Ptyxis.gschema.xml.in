@@ -340,6 +340,12 @@
       <description>If the directory should be preserved for new terminals</description>
     </key>
 
+    <key name="new-window-opens-home-directory" type="b">
+      <default>false</default>
+      <summary>New Window Opens Home Directory</summary>
+      <description>When enabled, new windows open in the home directory instead of the current working directory</description>
+    </key>
+
     <key name="palette" type="s">
       <default>'gnome'</default>
       <summary>Palette</summary>
